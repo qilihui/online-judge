@@ -43,3 +43,7 @@ spring:
 #      github:
 #        qilihui:
 #          oj: debug
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
