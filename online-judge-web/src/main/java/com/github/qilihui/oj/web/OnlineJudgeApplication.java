@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @date 2021/7/24 0:08
  */
 @SpringBootApplication
-@MapperScan("com.github.qilihui.oj.dao.mapper")
+@MapperScan({"com.github.qilihui.oj.dao.mapper"})
 public class OnlineJudgeApplication {
     public static void main(String[] args) {
         SpringApplication.run(OnlineJudgeApplication.class, args);

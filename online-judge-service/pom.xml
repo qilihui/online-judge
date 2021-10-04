@@ -19,7 +19,10 @@
         <dependency>
             <groupId>com.github.qilihui.oj</groupId>
             <artifactId>online-judge-dao</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.qilihui.oj.util</groupId>
+            <artifactId>online-judge-util</artifactId>
         </dependency>
     </dependencies>
 
