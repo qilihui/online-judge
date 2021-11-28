@@ -8,7 +8,7 @@ import com.github.qilihui.oj.core.model.JudgerResult;
  */
 public class TestMain {
     static {
-        System.loadLibrary("judge");
+        System.loadLibrary("judger");
     }
 
     public static void main(String[] args) {

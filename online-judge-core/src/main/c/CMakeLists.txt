@@ -8,6 +8,7 @@ set(CMAKE_C_FLAGS "-g -Wall -Werror -O3 -std=c99 -pie -fPIC")
 
 # make judger lib
 file(GLOB SOURCE "src/*.c" "src/rules/*.c")
+INCLUDE_DIRECTORIES("/usr/lib/jvm/java-8-openjdk-amd64/include" "/usr/lib/jvm/java-8-openjdk-amd64/include/linux")
 add_executable(libjudger.so ${SOURCE})
 target_link_libraries(libjudger.so pthread seccomp)
 
