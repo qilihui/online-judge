@@ -5,9 +5,10 @@
     <packaging>pom</packaging>
     <modules>
         <module>online-judge-dao</module>
+        <module>online-judge-util</module>
         <module>online-judge-service</module>
         <module>online-judge-web</module>
-        <module>online-judge-util</module>
+        <module>online-judge-core</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -55,6 +56,11 @@
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
                 <version>5.1.47</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>1.2.8</version>
             </dependency>
             <dependency>
                 <groupId>cn.hutool</groupId>

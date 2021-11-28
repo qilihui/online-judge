@@ -27,6 +27,7 @@ spring:
 #    timeout: 10000
   mvc:
     static-path-pattern: /static/**
+
   # 热启动
   devtools:
     restart:
