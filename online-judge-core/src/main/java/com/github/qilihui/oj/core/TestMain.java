@@ -13,26 +13,27 @@ public class TestMain {
 
     public static void main(String[] args) {
         JudgerCore core = new JudgerCore();
-        String[] arr = {"a1", "a32"};
-        JudgerResult result = core.run(1,
-                2,
-                3,
-                4,
-                5,
-                6,
-                7,
-                "/et",
-                "/et",
-                "/et",
-                "/et",
-                arr,
-                2,
+        String[] arr = {};
+        JudgerResult result = core.run(
+                -1,
+                -1,
+                -1,
+                102400,
+                -1,
+                -1,
+                102400,
+                "/home/qlh/project/testcase/demo/a.out",
+                "/home/qlh/project/testcase/demo/1.in",
+                "/home/qlh/project/testcase/demo/1.out",
+                "/home/qlh/project/testcase/demo/err.out",
                 null,
                 0,
-                "/et",
-                "/et",
-                7,
-                8);
+                null,
+                0,
+                "/home/qlh/project/testcase/demo/1.log",
+                null,
+                1001,
+                1001);
         System.out.println(result);
     }
 }

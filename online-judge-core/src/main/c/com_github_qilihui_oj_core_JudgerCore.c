@@ -37,6 +37,12 @@ JNICALL Java_com_github_qilihui_oj_core_JudgerCore_run(JNIEnv *env,
                                                        (jstring)((*env)->GetObjectArrayElement(env, env_, i)),
                                                        0);
     }
+    char *seccompRuleName;
+    if (seccompRuleName_ != NULL) {
+        seccompRuleName = (char *) (*env)->GetStringUTFChars(env, seccompRuleName_, 0);
+    } else {
+        seccompRuleName = NULL;
+    }
 
     struct config req = {
             (int) maxCpuTime_,
@@ -53,7 +59,7 @@ JNICALL Java_com_github_qilihui_oj_core_JudgerCore_run(JNIEnv *env,
             {(char *) reqArgs},
             {(char *) reqEnv},
             (char *) (*env)->GetStringUTFChars(env, logPath_, 0),
-            (char *) (*env)->GetStringUTFChars(env, seccompRuleName_, 0),
+            seccompRuleName,
             (int) uid_,
             (int) gid_
     };
@@ -70,9 +76,9 @@ JNICALL Java_com_github_qilihui_oj_core_JudgerCore_run(JNIEnv *env,
     (*env)->SetIntField(env, judgerResult_,
                         (*env)->GetFieldID(env, judgerResultClass, "realTime", "I"),
                         resp.real_time);
-    (*env)->SetIntField(env, judgerResult_,
-                        (*env)->GetFieldID(env, judgerResultClass, "memory", "J"),
-                        resp.memory);
+    (*env)->SetLongField(env, judgerResult_,
+                         (*env)->GetFieldID(env, judgerResultClass, "memory", "J"),
+                         resp.memory);
     (*env)->SetIntField(env, judgerResult_,
                         (*env)->GetFieldID(env, judgerResultClass, "signal", "I"),
                         resp.signal);
