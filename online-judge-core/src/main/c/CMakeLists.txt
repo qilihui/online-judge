@@ -4,10 +4,10 @@ project(judger C)
 #set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/output)
 
-set(CMAKE_C_FLAGS "-g -Wall -Werror -O3 -std=c99 -pie -fPIC")
+set(CMAKE_C_FLAGS "-g -Wall -Werror -O3 -std=c99 -pie -fPIC -shared")
 
 # make judger lib
-file(GLOB SOURCE "src/*.c" "src/rules/*.c")
+file(GLOB SOURCE "*.c" "rules/*.c")
 INCLUDE_DIRECTORIES("/usr/lib/jvm/java-8-openjdk-amd64/include" "/usr/lib/jvm/java-8-openjdk-amd64/include/linux")
 add_executable(libjudger.so ${SOURCE})
 target_link_libraries(libjudger.so pthread seccomp)
