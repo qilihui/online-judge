@@ -1,0 +1,3 @@
+ javah -d ./src/main/c -cp target/classes  com.github.qilihui.oj.core.JudgerCore
+
+ g++ -I/Library/Java/JavaVirtualMachines/zulu-8.jdk/Contents/Home/include -I/Library/Java/JavaVirtualMachines/zulu-8.jdk/Contents/Home/include/darwin -fPIC com_github_qilihui_oj_core_JudgerCore.cpp -fPIC -shared -o libjudge.dylib

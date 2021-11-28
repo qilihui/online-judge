@@ -10,10 +10,10 @@ extern "C" {
 /*
  * Class:     com_github_qilihui_oj_core_JudgerCore
  * Method:    run
- * Signature: (Lcom/github/qilihui/oj/core/model/JudgerConfig;)Lcom/github/qilihui/oj/core/model/JudgerResult;
+ * Signature: (IIJJIJILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;I[Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;II)Lcom/github/qilihui/oj/core/model/JudgerResult;
  */
 JNIEXPORT jobject JNICALL Java_com_github_qilihui_oj_core_JudgerCore_run
-  (JNIEnv *, jobject, jobject);
+  (JNIEnv *, jobject, jint, jint, jlong, jlong, jint, jlong, jint, jstring, jstring, jstring, jstring, jobjectArray, jint, jobjectArray, jint, jstring, jstring, jint, jint);
 
 #ifdef __cplusplus
 }

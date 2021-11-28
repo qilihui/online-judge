@@ -1,6 +1,5 @@
 package com.github.qilihui.oj.core;
 
-import com.github.qilihui.oj.core.model.JudgerConfig;
 import com.github.qilihui.oj.core.model.JudgerResult;
 
 /**
@@ -13,10 +12,27 @@ public class TestMain {
     }
 
     public static void main(String[] args) {
-//        System.out.println(System.getProperty("java.library.path"));
         JudgerCore core = new JudgerCore();
-        JudgerConfig config = new JudgerConfig();
-        JudgerResult result = core.run(config);
+        String[] arr = {"a1", "a32"};
+        JudgerResult result = core.run(1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                "/et",
+                "/et",
+                "/et",
+                "/et",
+                arr,
+                2,
+                null,
+                0,
+                "/et",
+                "/et",
+                7,
+                8);
         System.out.println(result);
     }
 }
