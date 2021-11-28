@@ -1,4 +1,5 @@
 #include "com_github_qilihui_oj_core_JudgerCore.h"
+#include "runner.h"
 #include <iostream>
 using namespace std;
 
@@ -27,15 +28,6 @@ JNIEXPORT jobject JNICALL Java_com_github_qilihui_oj_core_JudgerCore_run(JNIEnv 
                                                                          jint gid_)
 
 {
-
-    // jclass judgerConfigClass = env->GetObjectClass(config);
-
-    // jfieldID testF = env->GetFieldID(judgerConfigClass, "maxCpuTime", "I");
-    // jint testInt = env->GetIntField(judgerConfigClass, testF);
-    // cout << "Get field maxCpuTime(Int) = " << testInt << endl;
-
-    // jfieldID fID = env->GetFieldID(judgerConfigClass, "exePath", "Ljava/lang/String;");
-    // jstring str = static_cast<jstring>(env->GetObjectField(judgerConfigClass, fID));
     int maxCpuTime = (int)maxCpuTime_;
     cout << "Get field maxCpuTime(int) = " << maxCpuTime << endl;
 
