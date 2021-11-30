@@ -23,7 +23,8 @@ public class CompileTest {
                 "-o",
                 "/home/qlh/project/testcase/demo/main",
         };
-        String[] env = {"PATH=" + System.getenv("PATH")};
+        String path = "PATH=" + System.getenv("PATH");
+        String[] env = {path};
         JudgerResult result = core.run(
                 -1,
                 -1,

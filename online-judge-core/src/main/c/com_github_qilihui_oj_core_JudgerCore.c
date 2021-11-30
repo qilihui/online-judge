@@ -25,18 +25,6 @@ JNICALL Java_com_github_qilihui_oj_core_JudgerCore_run(JNIEnv *env,
                                                        jstring seccompRuleName_,
                                                        jint uid_,
                                                        jint gid_) {
-    char *reqArgs[ARGS_MAX_NUMBER];
-    for (int i = 0; i < argsLength_; ++i) {
-        reqArgs[i] = (char *) (*env)->GetStringUTFChars(env,
-                                                        (jstring)((*env)->GetObjectArrayElement(env, args_, i)),
-                                                        0);
-    }
-    char *reqEnv[ARGS_MAX_NUMBER];
-    for (int i = 0; i < envLength_; ++i) {
-        reqEnv[i] = (char *) (*env)->GetStringUTFChars(env,
-                                                       (jstring)((*env)->GetObjectArrayElement(env, env_, i)),
-                                                       0);
-    }
     char *seccompRuleName;
     if (seccompRuleName_ != NULL) {
         seccompRuleName = (char *) (*env)->GetStringUTFChars(env, seccompRuleName_, 0);
@@ -56,13 +44,23 @@ JNICALL Java_com_github_qilihui_oj_core_JudgerCore_run(JNIEnv *env,
             (char *) (*env)->GetStringUTFChars(env, inputPath_, 0),
             (char *) (*env)->GetStringUTFChars(env, outputPath_, 0),
             (char *) (*env)->GetStringUTFChars(env, errorPath_, 0),
-            {(char *) reqArgs},
-            {(char *) reqEnv},
+            {},
+            {},
             (char *) (*env)->GetStringUTFChars(env, logPath_, 0),
             seccompRuleName,
             (int) uid_,
             (int) gid_
     };
+    for (int i = 0; i < argsLength_; ++i) {
+        req.args[i] = (char *) (*env)->GetStringUTFChars(env,
+                                                        (jstring)((*env)->GetObjectArrayElement(env, args_, i)),
+                                                        0);
+    }
+    for (int i = 0; i < envLength_; ++i) {
+        req.env[i] = (char *) (*env)->GetStringUTFChars(env,
+                                                       (jstring)((*env)->GetObjectArrayElement(env, env_, i)),
+                                                       0);
+    }
     struct result resp;
     run(&req, &resp);
 
