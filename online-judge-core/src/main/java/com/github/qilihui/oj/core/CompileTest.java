@@ -7,9 +7,6 @@ import com.github.qilihui.oj.core.model.JudgerResult;
  * @date 2021/11/28 12:42 下午
  */
 public class CompileTest {
-    static {
-        System.loadLibrary("judger");
-    }
 
     public static void main(String[] args) {
         JudgerCore core = new JudgerCore();
