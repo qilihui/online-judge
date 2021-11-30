@@ -4,3 +4,23 @@ gcc -I/Library/Java/JavaVirtualMachines/zulu-8.jdk/Contents/Home/include -I/Libr
 
 sudo apt-get install libseccomp-dev
 mkdir build && cd build && cmake .. && make && sudo make install
+
+
+
+ printf("%d\n", req.max_cpu_time);
+    printf("%d\n", req.max_real_time);
+    printf("%ld\n", req.max_memory);
+    printf("%ld\n", req.max_stack);
+    printf("%d\n", req.max_process_number);
+    printf("%ld\n", req.max_output_size);
+    printf("%d\n", req.memory_limit_check_only);
+    printf("%s\n", req.exe_path);
+    printf("%s\n", req.input_path);
+    printf("%s\n", req.output_path);
+    printf("%s\n", req.error_path);
+    printf("%s %s %s %s %s %s %s\n", req.args[0], req.args[1], req.args[2], req.args[3], req.args[4], req.args[5],
+           req.args[6]);
+    printf("%s\n", req.log_path);
+    printf("%s\n", req.seccomp_rule_name);
+    printf("%u\n", req.uid);
+    printf("%u\n", req.gid);

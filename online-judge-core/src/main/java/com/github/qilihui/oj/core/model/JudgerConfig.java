@@ -1,7 +1,10 @@
 package com.github.qilihui.oj.core.model;
 
+import com.github.qilihui.oj.core.enums.SeccompRuleEnum;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 /**
@@ -11,6 +14,8 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class JudgerConfig {
     int maxCpuTime;
     int maxRealTime;
@@ -26,7 +31,7 @@ public class JudgerConfig {
     String[] args;
     String[] env;
     String logPath;
-    String seccompRuleName;
+    SeccompRuleEnum seccompRule;
     int uid;
     int gid;
 }

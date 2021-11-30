@@ -17,7 +17,7 @@ public class JudgerCore {
                 config.getMaxProcessNumber(), config.getMaxOutputSize(), config.getMemoryLimitCheckOnly(),
                 config.getExePath(), config.getInputPath(), config.getOutputPath(), config.getErrorPath(),
                 config.getArgs(), config.getArgs() == null ? 0 : config.getArgs().length, config.getEnv(), config.getEnv() == null ? 0 : config.getEnv().length,
-                config.getLogPath(), config.getSeccompRuleName(),
+                config.getLogPath(), config.getSeccompRule().getRuleName(),
                 config.getUid(), config.getGid());
     }
 

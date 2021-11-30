@@ -30,3 +30,5 @@ build/
 
 ### VS Code ###
 .vscode/
+/online-judge-core/src/main/c/build/
+/online-judge-core/src/main/c/output/
