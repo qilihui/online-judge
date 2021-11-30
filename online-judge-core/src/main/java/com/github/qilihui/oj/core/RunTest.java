@@ -6,23 +6,22 @@ import com.github.qilihui.oj.core.model.JudgerResult;
  * @author qilihui
  * @date 2021/11/28 12:42 下午
  */
-public class TestMain {
+public class RunTest {
     static {
         System.loadLibrary("judger");
     }
 
     public static void main(String[] args) {
         JudgerCore core = new JudgerCore();
-        String[] arr = {};
         JudgerResult result = core.run(
                 -1,
                 -1,
                 -1,
-                102400,
+                1024 * 1024 * 10,
                 -1,
                 -1,
-                102400,
-                "/home/qlh/project/testcase/demo/a.out",
+                1024 * 1024 * 10,
+                "/home/qlh/project/testcase/demo/main",
                 "/home/qlh/project/testcase/demo/1.in",
                 "/home/qlh/project/testcase/demo/1.out",
                 "/home/qlh/project/testcase/demo/err.out",
