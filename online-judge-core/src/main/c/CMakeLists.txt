@@ -15,4 +15,4 @@ target_link_libraries(libjudger.so pthread seccomp)
 
 install(FILES output/libjudger.so
     PERMISSIONS OWNER_EXECUTE OWNER_READ
-    DESTINATION /usr/lib/judger)
+    DESTINATION /usr/lib)

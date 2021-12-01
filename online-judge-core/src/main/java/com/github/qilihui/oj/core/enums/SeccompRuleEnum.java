@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
+ * JudgerConfig.SeccompRuleEnum
+ *
  * @author qilihui
  * @date 2021/11/30 10:26 下午
  */
