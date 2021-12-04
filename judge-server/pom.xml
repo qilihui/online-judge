@@ -9,7 +9,6 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.github.qilihui.oj.core</groupId>
     <artifactId>judge-server</artifactId>
 
     <properties>
@@ -32,7 +31,7 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.github.qilihui.oj.core</groupId>
+            <groupId>com.github.qilihui.oj</groupId>
             <artifactId>judge-core</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
