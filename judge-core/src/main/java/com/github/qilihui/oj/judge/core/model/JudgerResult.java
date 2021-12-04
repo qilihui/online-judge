@@ -1,4 +1,4 @@
-package com.github.qilihui.oj.core.model;
+package com.github.qilihui.oj.judge.core.model;
 
 import lombok.Data;
 

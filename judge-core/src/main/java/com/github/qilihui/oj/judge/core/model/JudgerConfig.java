@@ -1,6 +1,6 @@
-package com.github.qilihui.oj.core.model;
+package com.github.qilihui.oj.judge.core.model;
 
-import com.github.qilihui.oj.core.enums.SeccompRuleEnum;
+import com.github.qilihui.oj.judge.core.enums.SeccompRuleEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

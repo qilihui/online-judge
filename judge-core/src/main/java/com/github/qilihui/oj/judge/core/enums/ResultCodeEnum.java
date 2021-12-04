@@ -1,4 +1,4 @@
-package com.github.qilihui.oj.core.enums;
+package com.github.qilihui.oj.judge.core.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -8,7 +8,8 @@
         <module>online-judge-util</module>
         <module>online-judge-service</module>
         <module>online-judge-web</module>
-        <module>online-judge-core</module>
+        <module>judge-core</module>
+        <module>judge-server</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -20,7 +21,7 @@
     <artifactId>online-judge</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>online-judge</name>
-    <description></description>
+    <description>简称oj</description>
     <properties>
         <java.version>1.8</java.version>
     </properties>

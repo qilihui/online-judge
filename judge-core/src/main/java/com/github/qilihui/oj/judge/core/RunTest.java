@@ -1,8 +1,8 @@
-package com.github.qilihui.oj.core;
+package com.github.qilihui.oj.judge.core;
 
-import com.github.qilihui.oj.core.enums.SeccompRuleEnum;
-import com.github.qilihui.oj.core.model.JudgerConfig;
-import com.github.qilihui.oj.core.model.JudgerResult;
+import com.github.qilihui.oj.judge.core.enums.SeccompRuleEnum;
+import com.github.qilihui.oj.judge.core.model.JudgerConfig;
+import com.github.qilihui.oj.judge.core.model.JudgerResult;
 
 /**
  * @author qilihui

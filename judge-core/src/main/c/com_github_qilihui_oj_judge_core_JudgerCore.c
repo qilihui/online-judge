@@ -1,10 +1,9 @@
-#include "com_github_qilihui_oj_core_JudgerCore.h"
+#include "com_github_qilihui_oj_judge_core_JudgerCore.h"
 #include "runner.h"
-#include <stdio.h>
 
 JNIEXPORT jobject
 
-JNICALL Java_com_github_qilihui_oj_core_JudgerCore_run(JNIEnv *env,
+JNICALL Java_com_github_qilihui_oj_judge_core_JudgerCore_run(JNIEnv *env,
                                                        jobject instance,
                                                        jint maxCpuTime_,
                                                        jint maxRealTime_,
@@ -64,7 +63,7 @@ JNICALL Java_com_github_qilihui_oj_core_JudgerCore_run(JNIEnv *env,
     struct result resp;
     run(&req, &resp);
 
-    jclass judgerResultClass = (*env)->FindClass(env, "com/github/qilihui/oj/core/model/JudgerResult");
+    jclass judgerResultClass = (*env)->FindClass(env, "com/github/qilihui/oj/judge/core/model/JudgerResult");
     jmethodID construction_ = (*env)->GetMethodID(env, judgerResultClass, "<init>", "()V");
     jobject judgerResult_ = (*env)->NewObject(env, judgerResultClass, construction_);
 
