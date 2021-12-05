@@ -16,7 +16,7 @@ public class RunTest {
     }
 
     public static void compile() {
-        JudgerCore core = new JudgerCore();
+        JudgerCore core = JudgerCore.getInstance();
         String[] arr = {
                 "/usr/bin/gcc",
                 "-w",
@@ -52,7 +52,7 @@ public class RunTest {
     }
 
     public static void run() {
-        JudgerCore core = new JudgerCore();
+        JudgerCore core = JudgerCore.getInstance();
         JudgerConfig config = new JudgerConfig(
                 -1,
                 -1,

@@ -1,2 +1,13 @@
 server:
   port: 12138
+
+judger:
+  version: 0.0.1
+  baseDir: /judger/run
+  logDir: /log
+  compilerLogPath: ${judger.logDir}/compile.log
+  judgerRunLogPath: ${judger.logDir}/judger.log
+  serverLogPath: ${judger.logDir}/judge_server.log
+  testCaseDir: "/test_case"
+  spjSrcDir: "/judger/spj"
+  spjExeDir: "/judger/spj"

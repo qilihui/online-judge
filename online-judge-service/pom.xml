@@ -21,7 +21,7 @@
             <artifactId>online-judge-dao</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.github.qilihui.oj.util</groupId>
+            <groupId>com.github.qilihui.oj</groupId>
             <artifactId>online-judge-util</artifactId>
         </dependency>
     </dependencies>

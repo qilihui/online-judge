@@ -12,6 +12,22 @@ public class JudgerCore {
         System.loadLibrary("judger");
     }
 
+    private static volatile JudgerCore instance;
+
+    private JudgerCore() {
+    }
+
+    public static JudgerCore getInstance() {
+        if (instance == null) {
+            synchronized (JudgerCore.class) {
+                if (instance == null) {
+                    instance = new JudgerCore();
+                }
+            }
+        }
+        return instance;
+    }
+
     public JudgerResult run(JudgerConfig config) {
         return run(config.getMaxCpuTime(), config.getMaxRealTime(), config.getMaxMemory(), config.getMaxStack(),
                 config.getMaxProcessNumber(), config.getMaxOutputSize(), config.getMemoryLimitCheckOnly(),

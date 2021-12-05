@@ -1,0 +1,49 @@
+{
+  "properties": [
+    {
+      "name": "judger.version",
+      "type": "java.lang.String",
+      "description": "Description for judger.version."
+    },
+    {
+      "name": "judger.baseDir",
+      "type": "java.lang.String",
+      "description": "Description for judger.baseDir."
+    },
+    {
+      "name": "judger.logDir",
+      "type": "java.lang.String",
+      "description": "Description for judger.logDir."
+    },
+    {
+      "name": "judger.compilerLogPath",
+      "type": "java.lang.String",
+      "description": "Description for judger.compilerLogPath."
+    },
+    {
+      "name": "judger.judgerRunLogPath",
+      "type": "java.lang.String",
+      "description": "Description for judger.judgerRunLogPath."
+    },
+    {
+      "name": "judger.serverLogPath",
+      "type": "java.lang.String",
+      "description": "Description for judger.serverLogPath."
+    },
+    {
+      "name": "judger.testCaseDir",
+      "type": "java.lang.String",
+      "description": "Description for judger.testCaseDir."
+    },
+    {
+      "name": "judger.spjSrcDir",
+      "type": "java.lang.String",
+      "description": "Description for judger.spjSrcDir."
+    },
+    {
+      "name": "judger.spjExeDir",
+      "type": "java.lang.String",
+      "description": "Description for judger.spjExeDir."
+    }
+  ]
+}
