@@ -11,8 +11,11 @@ import lombok.Getter;
 @Getter
 public enum ResponseCode {
     SUCCESS(0, "SUCCESS"),
+
+    R_1(1, "编译错误"),
+
     P_1000001(1000001, "执行异常"),
-    
+
 
     ;
     private Integer code;

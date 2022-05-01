@@ -47,13 +47,16 @@ public class MessageHandler {
         JudgerResponse response = new JudgerResponse();
         response.setSubmissionId(config.getSubmissionId());
         try {
-            JudgerResponse.CompilerDTO compile = compiler.compile(config);
-            response.setCompiler(compile);
+            JudgeCompiler.CompilerDTO compile = compiler.compile(config);
             if (compile.getJudgerResult().getResult() == 0) {
                 List<JudgerResponse.RunDTO> execute = executor.execute(config);
                 response.setRun(execute);
+            } else {
+                response.result(ResponseCode.R_1);
+                response.setMsg(compile.getInfo());
             }
         } catch (Exception e) {
+            log.error("submissionId:{}", config.getSubmissionId(), e);
             response.result(ResponseCode.P_1000001);
         }
         log.info("{}", response);

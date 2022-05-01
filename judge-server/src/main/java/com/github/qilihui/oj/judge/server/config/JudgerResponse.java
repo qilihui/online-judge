@@ -17,23 +17,13 @@ public class JudgerResponse {
     private Integer code;
     private String msg;
     private String submissionId;
-    private CompilerDTO compiler;
     private List<RunDTO> run;
-
-    @NoArgsConstructor
-    @Data
-    public static class CompilerDTO {
-        private JudgerResult judgerResult;
-        private String info;
-
-    }
 
     @NoArgsConstructor
     @Data
     public static class RunDTO {
         private Integer id;
         private JudgerResult judgerResult;
-        private String md5;
         private Boolean pass;
     }
 

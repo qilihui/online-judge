@@ -60,12 +60,12 @@ public class Executor {
 
             JudgerResult result = JudgerCore.getInstance().run(judgerConfig);
             JudgerResponse.RunDTO dto = new JudgerResponse.RunDTO();
-            dto.setId(testCaseDTO.getId());
-            dto.setJudgerResult(result);
-            dto.setMd5(SecureUtil.md5(FileUtil.file(output)));
-            dto.setPass(dto.getMd5().equals(testCaseDTO.getMd5()));
             list.add(dto);
 
+            dto.setId(testCaseDTO.getId());
+            dto.setJudgerResult(result);
+            boolean pass = result.getResult() == 0 && SecureUtil.md5(FileUtil.file(output)).equals(testCaseDTO.getMd5());
+            dto.setPass(pass);
             if (!dto.getPass()) {
                 break;
             }

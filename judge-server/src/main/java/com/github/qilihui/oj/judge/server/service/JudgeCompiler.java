@@ -7,7 +7,8 @@ import com.github.qilihui.oj.judge.core.enums.SeccompRuleEnum;
 import com.github.qilihui.oj.judge.core.model.JudgerConfig;
 import com.github.qilihui.oj.judge.core.model.JudgerResult;
 import com.github.qilihui.oj.judge.server.config.JudgerRequest;
-import com.github.qilihui.oj.judge.server.config.JudgerResponse;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -30,7 +31,7 @@ public class JudgeCompiler {
     /**
      * 编译代码
      */
-    public JudgerResponse.CompilerDTO compile(JudgerRequest config) {
+    public CompilerDTO compile(JudgerRequest config) {
         String path = baseDir + "/" + config.getSubmissionId() + "/";
         JudgerRequest.CompileDTO compileConfig = config.getCompile();
         for (int i = 0; i < compileConfig.getCompileCommand().length; i++) {
@@ -64,11 +65,19 @@ public class JudgeCompiler {
                 .uid(0)
                 .gid(0).build();
         JudgerResult result = JudgerCore.getInstance().run(judgerConfig);
-        JudgerResponse.CompilerDTO dto = new JudgerResponse.CompilerDTO();
+        CompilerDTO dto = new CompilerDTO();
         dto.setJudgerResult(result);
         if (result.getResult() != 0) {
             dto.setInfo(FileUtil.readUtf8String(outPath));
         }
         return dto;
+    }
+
+    @NoArgsConstructor
+    @Data
+    public static class CompilerDTO {
+        private JudgerResult judgerResult;
+        private String info;
+
     }
 }

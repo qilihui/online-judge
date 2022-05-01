@@ -22,8 +22,11 @@ public enum SeccompRuleEnum {
     private final String ruleName;
 
     public static SeccompRuleEnum findByRuleName(String ruleName) {
+        if (ruleName == null) {
+            return NON;
+        }
         for (SeccompRuleEnum value : SeccompRuleEnum.values()) {
-            if (value.getRuleName().equals(ruleName)) {
+            if (ruleName.equals(value.getRuleName())) {
                 return value;
             }
         }
