@@ -7,7 +7,9 @@ import com.github.qilihui.oj.judge.core.enums.SeccompRuleEnum;
 import com.github.qilihui.oj.judge.core.model.JudgerConfig;
 import com.github.qilihui.oj.judge.core.model.JudgerResult;
 import com.github.qilihui.oj.judge.server.config.LangConfig;
+import com.github.qilihui.oj.judge.server.handler.MessageHandler;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +31,7 @@ public class JudgeCompiler {
     /**
      * 编译代码
      */
-    public JudgerResult compile(LangConfig config) {
+    public MessageHandler.JudgerResultResponse compile(LangConfig config) {
         String path = baseDir + "/" + config.getSubmissionId() + "/";
         LangConfig.CompileDTO compileConfig = config.getCompile();
         for (int i = 0; i < compileConfig.getCompileCommand().length; i++) {
@@ -62,6 +64,12 @@ public class JudgeCompiler {
                 .seccompRule(SeccompRuleEnum.NON)
                 .uid(0)
                 .gid(0).build();
-        return JudgerCore.getInstance().run(judgerConfig);
+        JudgerResult result = JudgerCore.getInstance().run(judgerConfig);
+        MessageHandler.JudgerResultResponse response = new MessageHandler.JudgerResultResponse();
+        BeanUtils.copyProperties(result, response);
+        if (response.getResult() != 0) {
+            response.setValue(FileUtil.readUtf8String(outPath));
+        }
+        return response;
     }
 }

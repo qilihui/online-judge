@@ -1,7 +1,6 @@
 package com.github.qilihui.oj.judge.server.handler;
 
 import cn.hutool.json.JSONUtil;
-import com.github.qilihui.oj.judge.core.model.JudgerResult;
 import com.github.qilihui.oj.judge.server.config.LangConfig;
 import com.github.qilihui.oj.judge.server.service.Executor;
 import com.github.qilihui.oj.judge.server.service.JudgeCompiler;
@@ -51,20 +50,34 @@ public class MessageHandler {
 
     public void process(LangConfig config) {
         Response response = new Response();
-        JudgerResult compile = compiler.compile(config);
+        JudgerResultResponse compile = compiler.compile(config);
         response.setCompilerResult(compile);
         if (compile.getResult() != 0) {
             kafkaTemplate.send("judge.result", JSONUtil.toJsonStr(response));
+            log.info("{}", response);
             return;
         }
-        List<JudgerResult> execute = executor.execute(config);
+        List<JudgerResultResponse> execute = executor.execute(config);
         response.setRunResult(execute);
         kafkaTemplate.send("judge.result", JSONUtil.toJsonStr(response));
+        log.info("{}", response);
     }
 
     @Data
     private static class Response {
-        private JudgerResult compilerResult;
-        private List<JudgerResult> runResult;
+        private JudgerResultResponse compilerResult;
+        private List<JudgerResultResponse> runResult;
+    }
+
+    @Data
+    public static class JudgerResultResponse {
+        int cpuTime;
+        int realTime;
+        long memory;
+        int signal;
+        int exitCode;
+        int error;
+        int result;
+        String value;
     }
 }

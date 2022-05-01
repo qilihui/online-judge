@@ -2,11 +2,14 @@ package com.github.qilihui.oj.judge.server.service;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.file.FileWriter;
+import cn.hutool.crypto.SecureUtil;
 import com.github.qilihui.oj.judge.core.JudgerCore;
 import com.github.qilihui.oj.judge.core.model.JudgerConfig;
 import com.github.qilihui.oj.judge.core.model.JudgerResult;
 import com.github.qilihui.oj.judge.server.config.LangConfig;
+import com.github.qilihui.oj.judge.server.handler.MessageHandler;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -27,17 +30,17 @@ public class Executor {
     @Value("${judger.judgerRunLogPath}")
     private String judgerRunLogPath;
 
-    public List<JudgerResult> execute(LangConfig config) {
+    public List<MessageHandler.JudgerResultResponse> execute(LangConfig config) {
         String path = baseDir + "/" + config.getSubmissionId() + "/";
         String executableFilePath = path + config.getCompile().getExeName();
-        String outPath = path + "run.out";
         String[] testCase = config.getTestCase();
 
-        List<JudgerResult> list = new ArrayList<>();
+        List<MessageHandler.JudgerResultResponse> list = new ArrayList<>();
         for (int i = 0; i < testCase.length; i++) {
-            File file = FileUtil.touch(path + String.format("%d.in", i));
+            File file = FileUtil.touch(String.format("%s%d.in", path, i));
             FileWriter writer = new FileWriter(file);
             writer.write(testCase[i]);
+            String output = String.format("%s%d.out", path, i);
             JudgerConfig judgerConfig = JudgerConfig.builder()
                     .maxCpuTime(config.getCompile().getMaxCpuTime())
                     .maxRealTime(config.getCompile().getMaxRealTime())
@@ -48,8 +51,8 @@ public class Executor {
                     .memoryLimitCheckOnly(config.getRun().getMemoryLimitCheckOnly())
                     .exePath(executableFilePath)
                     .inputPath(file.getPath())
-                    .outputPath(outPath)
-                    .errorPath(outPath)
+                    .outputPath(output)
+                    .errorPath(path + "err.out")
                     .args(null)
                     .env(null)
                     .logPath(judgerRunLogPath)
@@ -57,7 +60,10 @@ public class Executor {
                     .uid(0)
                     .gid(0).build();
             JudgerResult result = JudgerCore.getInstance().run(judgerConfig);
-            list.add(result);
+            MessageHandler.JudgerResultResponse response = new MessageHandler.JudgerResultResponse();
+            response.setValue(SecureUtil.md5(FileUtil.file(output)));
+            BeanUtils.copyProperties(result, response);
+            list.add(response);
         }
         return list;
     }
