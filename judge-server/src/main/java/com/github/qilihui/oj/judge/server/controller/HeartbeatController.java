@@ -2,7 +2,7 @@ package com.github.qilihui.oj.judge.server.controller;
 
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.json.JSONUtil;
-import com.github.qilihui.oj.judge.server.config.LangConfig;
+import com.github.qilihui.oj.judge.server.config.JudgerRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -32,7 +32,7 @@ public class HeartbeatController {
     }
 
     @PostMapping("/judge")
-    public Map<String, Object> judge(@RequestBody LangConfig config) {
+    public Map<String, Object> judge(@RequestBody JudgerRequest config) {
         config.setSubmissionId(UUID.randomUUID().toString());
         kafkaTemplate.send("test", JSONUtil.toJsonStr(config));
         Map<String, Object> map = MapUtil.newHashMap();

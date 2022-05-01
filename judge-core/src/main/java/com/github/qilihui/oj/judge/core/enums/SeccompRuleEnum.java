@@ -20,4 +20,13 @@ public enum SeccompRuleEnum {
     NODE("node");
 
     private final String ruleName;
+
+    public static SeccompRuleEnum findByRuleName(String ruleName) {
+        for (SeccompRuleEnum value : SeccompRuleEnum.values()) {
+            if (value.getRuleName().equals(ruleName)) {
+                return value;
+            }
+        }
+        return NON;
+    }
 }

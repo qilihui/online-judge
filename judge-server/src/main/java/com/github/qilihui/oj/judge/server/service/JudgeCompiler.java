@@ -6,10 +6,9 @@ import com.github.qilihui.oj.judge.core.JudgerCore;
 import com.github.qilihui.oj.judge.core.enums.SeccompRuleEnum;
 import com.github.qilihui.oj.judge.core.model.JudgerConfig;
 import com.github.qilihui.oj.judge.core.model.JudgerResult;
-import com.github.qilihui.oj.judge.server.config.LangConfig;
-import com.github.qilihui.oj.judge.server.handler.MessageHandler;
+import com.github.qilihui.oj.judge.server.config.JudgerRequest;
+import com.github.qilihui.oj.judge.server.config.JudgerResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -31,9 +30,9 @@ public class JudgeCompiler {
     /**
      * 编译代码
      */
-    public MessageHandler.JudgerResultResponse compile(LangConfig config) {
+    public JudgerResponse.CompilerDTO compile(JudgerRequest config) {
         String path = baseDir + "/" + config.getSubmissionId() + "/";
-        LangConfig.CompileDTO compileConfig = config.getCompile();
+        JudgerRequest.CompileDTO compileConfig = config.getCompile();
         for (int i = 0; i < compileConfig.getCompileCommand().length; i++) {
             if ("{src_path}".equals(compileConfig.getCompileCommand()[i])) {
                 compileConfig.getCompileCommand()[i] = path + compileConfig.getSrcName();
@@ -47,9 +46,9 @@ public class JudgeCompiler {
         FileWriter writer = new FileWriter(file);
         writer.write(config.getSrc());
         JudgerConfig judgerConfig = JudgerConfig.builder()
-                .maxCpuTime(compileConfig.getMaxCpuTime())
-                .maxRealTime(compileConfig.getMaxRealTime())
-                .maxMemory(compileConfig.getMaxMemory())
+                .maxCpuTime(config.getMaxCpuTime())
+                .maxRealTime(config.getMaxRealTime())
+                .maxMemory(config.getMaxMemory())
                 .maxStack(128 * 1024 * 1024)
                 .maxOutputSize(20 * 1024 * 1024)
                 .maxProcessNumber(-1)
@@ -65,11 +64,11 @@ public class JudgeCompiler {
                 .uid(0)
                 .gid(0).build();
         JudgerResult result = JudgerCore.getInstance().run(judgerConfig);
-        MessageHandler.JudgerResultResponse response = new MessageHandler.JudgerResultResponse();
-        BeanUtils.copyProperties(result, response);
-        if (response.getResult() != 0) {
-            response.setValue(FileUtil.readUtf8String(outPath));
+        JudgerResponse.CompilerDTO dto = new JudgerResponse.CompilerDTO();
+        dto.setJudgerResult(result);
+        if (result.getResult() != 0) {
+            dto.setInfo(FileUtil.readUtf8String(outPath));
         }
-        return response;
+        return dto;
     }
 }

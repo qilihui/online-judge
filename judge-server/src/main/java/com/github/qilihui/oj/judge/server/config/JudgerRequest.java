@@ -1,8 +1,9 @@
 package com.github.qilihui.oj.judge.server.config;
 
-import com.github.qilihui.oj.judge.core.enums.SeccompRuleEnum;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 /**
  * @author qilihui
@@ -10,22 +11,22 @@ import lombok.NoArgsConstructor;
  */
 @NoArgsConstructor
 @Data
-public class LangConfig {
+public class JudgerRequest {
     private String language;
-    private String src;
     private String submissionId;
-    private LangConfig.CompileDTO compile;
-    private LangConfig.RunDTO run;
-    private String[] testCase;
+    private String src;
+    private Integer maxCpuTime;
+    private Integer maxRealTime;
+    private Long maxMemory;
+    private CompileDTO compile;
+    private RunDTO run;
+    private List<TestCaseDTO> testCase;
 
     @NoArgsConstructor
     @Data
     public static class CompileDTO {
         private String srcName;
         private String exeName;
-        private Integer maxCpuTime;
-        private Integer maxRealTime;
-        private Long maxMemory;
         private String[] compileCommand;
     }
 
@@ -33,8 +34,16 @@ public class LangConfig {
     @Data
     public static class RunDTO {
         private String[] command;
-        private SeccompRuleEnum seccompRule;
-        private String env;
+        private String seccompRule;
+        private Object env;
         private Integer memoryLimitCheckOnly;
+    }
+
+    @NoArgsConstructor
+    @Data
+    public static class TestCaseDTO {
+        private Integer id;
+        private String in;
+        private String md5;
     }
 }

@@ -1,10 +1,11 @@
 package com.github.qilihui.oj.judge.server.handler;
 
 import cn.hutool.json.JSONUtil;
-import com.github.qilihui.oj.judge.server.config.LangConfig;
+import com.github.qilihui.oj.judge.server.config.JudgerRequest;
+import com.github.qilihui.oj.judge.server.config.JudgerResponse;
+import com.github.qilihui.oj.judge.server.exception.ResponseCode;
 import com.github.qilihui.oj.judge.server.service.Executor;
 import com.github.qilihui.oj.judge.server.service.JudgeCompiler;
-import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -16,12 +17,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * <p>
- * 消息处理器
- * </p>
- *
- * @author yangkai.shen
- * @date Created in 2019-01-07 14:58
+ * @author qlh
  */
 @Component
 @Slf4j
@@ -38,8 +34,7 @@ public class MessageHandler {
         try {
             String message = (String) record.value();
             log.info("收到消息: {}", message);
-            LangConfig langConfig = JSONUtil.toBean(message, LangConfig.class);
-            this.process(langConfig);
+            this.process(JSONUtil.toBean(message, JudgerRequest.class));
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         } finally {
@@ -48,36 +43,21 @@ public class MessageHandler {
         }
     }
 
-    public void process(LangConfig config) {
-        Response response = new Response();
-        JudgerResultResponse compile = compiler.compile(config);
-        response.setCompilerResult(compile);
-        if (compile.getResult() != 0) {
-            kafkaTemplate.send("judge.result", JSONUtil.toJsonStr(response));
-            log.info("{}", response);
-            return;
+    public void process(JudgerRequest config) {
+        JudgerResponse response = new JudgerResponse();
+        response.setSubmissionId(config.getSubmissionId());
+        try {
+            JudgerResponse.CompilerDTO compile = compiler.compile(config);
+            response.setCompiler(compile);
+            if (compile.getJudgerResult().getResult() == 0) {
+                List<JudgerResponse.RunDTO> execute = executor.execute(config);
+                response.setRun(execute);
+            }
+        } catch (Exception e) {
+            response.result(ResponseCode.P_1000001);
         }
-        List<JudgerResultResponse> execute = executor.execute(config);
-        response.setRunResult(execute);
-        kafkaTemplate.send("judge.result", JSONUtil.toJsonStr(response));
         log.info("{}", response);
+        kafkaTemplate.send("judge.result", JSONUtil.toJsonStr(response));
     }
 
-    @Data
-    private static class Response {
-        private JudgerResultResponse compilerResult;
-        private List<JudgerResultResponse> runResult;
-    }
-
-    @Data
-    public static class JudgerResultResponse {
-        int cpuTime;
-        int realTime;
-        long memory;
-        int signal;
-        int exitCode;
-        int error;
-        int result;
-        String value;
-    }
 }

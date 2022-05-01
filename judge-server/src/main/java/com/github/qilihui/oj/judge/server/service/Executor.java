@@ -4,12 +4,12 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.file.FileWriter;
 import cn.hutool.crypto.SecureUtil;
 import com.github.qilihui.oj.judge.core.JudgerCore;
+import com.github.qilihui.oj.judge.core.enums.SeccompRuleEnum;
 import com.github.qilihui.oj.judge.core.model.JudgerConfig;
 import com.github.qilihui.oj.judge.core.model.JudgerResult;
-import com.github.qilihui.oj.judge.server.config.LangConfig;
-import com.github.qilihui.oj.judge.server.handler.MessageHandler;
+import com.github.qilihui.oj.judge.server.config.JudgerRequest;
+import com.github.qilihui.oj.judge.server.config.JudgerResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -30,21 +30,19 @@ public class Executor {
     @Value("${judger.judgerRunLogPath}")
     private String judgerRunLogPath;
 
-    public List<MessageHandler.JudgerResultResponse> execute(LangConfig config) {
+    public List<JudgerResponse.RunDTO> execute(JudgerRequest config) {
         String path = baseDir + "/" + config.getSubmissionId() + "/";
         String executableFilePath = path + config.getCompile().getExeName();
-        String[] testCase = config.getTestCase();
-
-        List<MessageHandler.JudgerResultResponse> list = new ArrayList<>();
-        for (int i = 0; i < testCase.length; i++) {
-            File file = FileUtil.touch(String.format("%s%d.in", path, i));
+        List<JudgerResponse.RunDTO> list = new ArrayList<>();
+        for (JudgerRequest.TestCaseDTO testCaseDTO : config.getTestCase()) {
+            File file = FileUtil.touch(String.format("%s%d.in", path, testCaseDTO.getId()));
             FileWriter writer = new FileWriter(file);
-            writer.write(testCase[i]);
-            String output = String.format("%s%d.out", path, i);
+            writer.write(testCaseDTO.getIn());
+            String output = String.format("%s%d.out", path, testCaseDTO.getId());
             JudgerConfig judgerConfig = JudgerConfig.builder()
-                    .maxCpuTime(config.getCompile().getMaxCpuTime())
-                    .maxRealTime(config.getCompile().getMaxRealTime())
-                    .maxMemory(config.getCompile().getMaxMemory())
+                    .maxCpuTime(config.getMaxCpuTime())
+                    .maxRealTime(config.getMaxRealTime())
+                    .maxMemory(config.getMaxMemory())
                     .maxStack(128 * 1024 * 1024)
                     .maxOutputSize(20 * 1024 * 1024)
                     .maxProcessNumber(-1)
@@ -56,14 +54,21 @@ public class Executor {
                     .args(null)
                     .env(null)
                     .logPath(judgerRunLogPath)
-                    .seccompRule(config.getRun().getSeccompRule())
+                    .seccompRule(SeccompRuleEnum.findByRuleName(config.getRun().getSeccompRule()))
                     .uid(0)
                     .gid(0).build();
+
             JudgerResult result = JudgerCore.getInstance().run(judgerConfig);
-            MessageHandler.JudgerResultResponse response = new MessageHandler.JudgerResultResponse();
-            response.setValue(SecureUtil.md5(FileUtil.file(output)));
-            BeanUtils.copyProperties(result, response);
-            list.add(response);
+            JudgerResponse.RunDTO dto = new JudgerResponse.RunDTO();
+            dto.setId(testCaseDTO.getId());
+            dto.setJudgerResult(result);
+            dto.setMd5(SecureUtil.md5(FileUtil.file(output)));
+            dto.setPass(dto.getMd5().equals(testCaseDTO.getMd5()));
+            list.add(dto);
+
+            if (!dto.getPass()) {
+                break;
+            }
         }
         return list;
     }
