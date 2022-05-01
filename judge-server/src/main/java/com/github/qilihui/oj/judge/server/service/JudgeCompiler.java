@@ -30,7 +30,7 @@ public class JudgeCompiler {
      * 编译代码
      */
     public JudgerResult compile(LangConfig config) {
-        String path = baseDir + config.getSubmissionId();
+        String path = baseDir + "/" + config.getSubmissionId() + "/";
         LangConfig.CompileDTO compileConfig = config.getCompile();
         for (int i = 0; i < compileConfig.getCompileCommand().length; i++) {
             if ("{src_path}".equals(compileConfig.getCompileCommand()[i])) {

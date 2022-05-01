@@ -28,7 +28,7 @@ spring:
 judger:
   version: 0.0.1
   baseDir: /judger/run
-  logDir: /log
+  logDir: /judger/log
   compilerLogPath: ${judger.logDir}/compile.log
   judgerRunLogPath: ${judger.logDir}/judger.log
   serverLogPath: ${judger.logDir}/judge_server.log

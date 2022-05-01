@@ -11,6 +11,8 @@ public class Test2 {
     @Test
     public void testSend() {
         System.out.println(UUID.randomUUID());
+
+        System.out.println();
     }
 
 }

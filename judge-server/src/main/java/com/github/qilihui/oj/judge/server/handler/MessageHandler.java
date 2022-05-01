@@ -40,7 +40,7 @@ public class MessageHandler {
             String message = (String) record.value();
             log.info("收到消息: {}", message);
             LangConfig langConfig = JSONUtil.toBean(message, LangConfig.class);
-
+            this.process(langConfig);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         } finally {

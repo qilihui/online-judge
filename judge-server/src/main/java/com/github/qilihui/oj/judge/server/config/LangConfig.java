@@ -25,7 +25,7 @@ public class LangConfig {
         private String exeName;
         private Integer maxCpuTime;
         private Integer maxRealTime;
-        private Integer maxMemory;
+        private Long maxMemory;
         private String[] compileCommand;
     }
 

@@ -28,7 +28,7 @@ public class Executor {
     private String judgerRunLogPath;
 
     public List<JudgerResult> execute(LangConfig config) {
-        String path = baseDir + config.getSubmissionId();
+        String path = baseDir + "/" + config.getSubmissionId() + "/";
         String executableFilePath = path + config.getCompile().getExeName();
         String outPath = path + "run.out";
         String[] testCase = config.getTestCase();
