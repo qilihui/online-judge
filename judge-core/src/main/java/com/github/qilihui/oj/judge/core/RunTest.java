@@ -36,7 +36,7 @@ public class RunTest {
                 -1,
                 -1,
                 1024 * 1024 * 10,
-                "/usr/bin/gcc",
+                arr[0],
                 "/dev/null",
                 "/dev/null",
                 "/home/qlh/project/testcase/demo/compile_result",

@@ -36,6 +36,10 @@
             <optional>true</optional>
         </dependency>
         <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.github.qilihui.oj</groupId>
             <artifactId>judge-core</artifactId>
         </dependency>

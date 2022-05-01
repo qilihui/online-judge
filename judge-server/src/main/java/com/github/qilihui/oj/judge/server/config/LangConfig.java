@@ -1,5 +1,6 @@
 package com.github.qilihui.oj.judge.server.config;
 
+import com.github.qilihui.oj.judge.core.enums.SeccompRuleEnum;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,9 +11,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class LangConfig {
-    private String name;
+    private String language;
+    private String src;
+    private String submissionId;
     private LangConfig.CompileDTO compile;
     private LangConfig.RunDTO run;
+    private String[] testCase;
 
     @NoArgsConstructor
     @Data
@@ -28,8 +32,8 @@ public class LangConfig {
     @NoArgsConstructor
     @Data
     public static class RunDTO {
-        private String command;
-        private String seccompRule;
+        private String[] command;
+        private SeccompRuleEnum seccompRule;
         private String env;
         private Integer memoryLimitCheckOnly;
     }
